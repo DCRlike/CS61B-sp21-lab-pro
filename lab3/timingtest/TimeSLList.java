@@ -29,7 +29,7 @@ public class TimeSLList {
         AList<Integer> opCounts = new AList<>();
 
         int temp=1000;
-        while (temp<=20480000){
+        while (temp<=102400){
             Ns.addLast(temp);
             opCounts.addLast(temp);
             temp= temp*2;
@@ -44,9 +44,7 @@ public class TimeSLList {
                 j=j+1;
             }
             Stopwatch sw = new Stopwatch();
-            for (int k = 0; k < M; k++) {
-                L.getLast();
-            }
+            L.getLast();
             times.addLast(sw.elapsedTime());
             opCounts.addLast(M);
         }
