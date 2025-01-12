@@ -137,18 +137,20 @@ public class Model extends Observable {
      * and the trailing tile does not.
      */
     public boolean handleOneColTiltUp(int col) {
+        // 检查列索引是否有效
         if (col < 0 || col >= board.size()) {
             return false;
         }
         boolean colChanged = false;
 
+        // 初始化一个布尔数组，记录每个位置的方块是否可以合并
         boolean[] canBeMerged = new boolean[board.size()];
         for (int i = 0; i < canBeMerged.length; i++) {
             canBeMerged[i] = true;
         }
 
+        // 从倒数第二行开始向上遍历每一行
         for (int i = board.size() - 2; i >= 0; i--) {
-
             Tile this_tile = board.tile(col, i);
             if (this_tile == null) {
                 continue;
@@ -156,7 +158,7 @@ public class Model extends Observable {
 
             int new_base = i;
 
-            //Find the new_base(new row of the tile)
+            // 找到当前方块可以移动到的新位置
             while (new_base + 1 < board.size() &&
                     (board.tile(col, new_base + 1) == null ||
                             (board.tile(col, new_base + 1) != null &&
@@ -166,8 +168,10 @@ public class Model extends Observable {
                 ++new_base;
             }
 
+            // 检查列是否发生变化
             colChanged = colChanged || (new_base == i ? false : true);
             if (new_base != i) {
+                // 移动方块并更新分数
                 if(board.move(col, new_base, this_tile)) {
                     score += board.tile(col, new_base).value();
                     canBeMerged[new_base] = false;
